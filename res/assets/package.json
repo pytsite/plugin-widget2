@@ -1,0 +1,7 @@
+{
+  "name": "@pytsite/widget2",
+  "main": "js/index.js",
+  "dependencies": {
+    "react": "^16.8.6"
+  }
+}

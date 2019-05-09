@@ -1,0 +1,21 @@
+{
+  "name": "widget2",
+  "version": "0.1",
+  "description": {
+    "en": "Widget2",
+    "ru": "Widget2",
+    "uk": "Widget2"
+  },
+  "url": "https://github.com/pytsite/plugin-widget2",
+  "author": {
+    "name": "Oleksandr Shepetko",
+    "email": "a@shepetko.com",
+    "url": "https://shepetko.com"
+  },
+  "requires": {
+    "pytsite": ">=8.9",
+    "plugins": {
+      "assetman": "^5.1"
+    }
+  }
+}
