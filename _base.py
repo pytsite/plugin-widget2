@@ -4,9 +4,9 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from typing import List as _List
-from json import dumps as _json_dumps
-from pytsite import html as _html, util as _util
+from typing import List, Type
+from json import dumps as json_dumps
+from pytsite import html, util
 
 
 def _json_serializer(obj):
@@ -38,7 +38,7 @@ class Base:
     def children(self):
         """Get children
 
-        :rtype: _List[Base]
+        :rtype: List[Base]
         """
         return self._children
 
@@ -52,9 +52,10 @@ class Base:
         """Init
         """
         self._cid = (self.__class__.__module__ + '.' + self.__class__.__name__).lower().replace('._', '.')
-        self._uid = uid or _util.random_str()
+        self._uid = uid or util.random_str()
         self._weight = kwargs.get('weight', 0)
-        self._children = []  # type: _List[Base]
+        self._children = []  # type: List[Base]
+        self._em_type = kwargs.get('em_type', html.Div)  # type: Type[html.Element]
         self._em_css = kwargs.get('em_css', 'pytsite-widget2')
 
         self._props = {
@@ -70,16 +71,16 @@ class Base:
 
         return self
 
-    def render(self) -> _html.Element:
+    def render(self) -> html.Element:
         """Render a widget
         """
 
-        return _html.Div(css=self._em_css,
-                         data_cid=self._cid,
-                         data_uid=self._uid,
-                         data_weight=self._weight,
-                         data_props=_json_dumps(_util.cleanup_dict(self._props)),
-                         data_children=_json_dumps(self._children, default=_json_serializer))
+        return self._em_type(css=self._em_css,
+                             data_cid=self._cid,
+                             data_uid=self._uid,
+                             data_weight=self._weight,
+                             data_props=json_dumps(util.cleanup_dict(self._props)),
+                             data_children=json_dumps(self._children, default=_json_serializer))
 
     def __str__(self) -> str:
         """__str___()
