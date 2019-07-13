@@ -4,9 +4,10 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
+import htmler
 from typing import List, Type
 from json import dumps as json_dumps
-from pytsite import html, util
+from pytsite import util
 
 
 def _json_serializer(obj):
@@ -55,7 +56,7 @@ class Base:
         self._uid = uid or util.random_str()
         self._weight = kwargs.get('weight', 0)
         self._children = []  # type: List[Base]
-        self._em_type = kwargs.get('em_type', html.Div)  # type: Type[html.Element]
+        self._em_type = kwargs.get('em_type', htmler.Div)  # type: Type[htmler.Element]
         self._em_css = kwargs.get('em_css', 'pytsite-widget2')
 
         self._props = {
@@ -71,7 +72,7 @@ class Base:
 
         return self
 
-    def render(self) -> html.Element:
+    def render(self) -> htmler.Element:
         """Render a widget
         """
 

@@ -1,6 +1,6 @@
 {
   "name": "widget2",
-  "version": "0.2",
+  "version": "0.3",
   "description": {
     "en": "Widget2",
     "ru": "Widget2",
@@ -13,7 +13,10 @@
     "url": "https://shepetko.com"
   },
   "requires": {
-    "pytsite": ">=8.9",
+    "pytsite": ">=9.0",
+    "packages": {
+      "htmler": ">=0.1"
+    },
     "plugins": {
       "assetman": "^5.1"
     }

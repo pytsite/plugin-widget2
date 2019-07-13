@@ -4,7 +4,7 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from pytsite import html
+import htmler
 from . import _base
 
 
@@ -17,7 +17,7 @@ class Input(_base.Base):
 
         self._type = kwargs.get('type', 'hidden')
 
-    def render(self) -> html.Element:
+    def render(self) -> htmler.Element:
         self._props.update({
             'type': self._type,
         })
