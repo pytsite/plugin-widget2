@@ -1,66 +1,74 @@
-import PropTypes from 'prop-types';
 import React from "react";
 import ReactDOM from "react-dom";
-import $ from "jquery";
-import {Hidden} from "./components/input";
+import {Html} from "./components/static";
+import {Hidden, Text} from "./components/input";
 
 const widgets = {};
 
-class ReactWidget extends React.Component {
-    static propTypes = {
-        wComponent: PropTypes.func.isRequired,
-        wProps: PropTypes.object,
-        wChildren: PropTypes.arrayOf(PropTypes.object),
-    };
-
-    render() {
-        const children = [];
-        this.props.wChildren.forEach(childInfo => {
-            children.push(createWidget(childInfo['cid'], childInfo['props'], childInfo['children']));
-        });
-
-        return <React.Fragment>
-            {React.createElement(this.props.wComponent, this.props.wProps, ...children)}
-        </React.Fragment>;
-    }
-}
-
-export function registerWidgetComponent(cid, widgetComponent) {
+/**
+ * Register widget
+ *
+ * @param {string} cid
+ * @param {Rect.Component} widgetComponent
+ */
+export function registerWidget(cid, widgetComponent) {
     widgets[cid] = widgetComponent;
     initComponents(cid);
 }
 
-export function createWidget(cid, props, childrenInfo) {
+/**
+ * Create widget
+ *
+ * @param {string} cid
+ * @param {Object} props
+ * @returns {React.Element}
+ */
+export function createWidget(cid, props) {
     if (!widgets.hasOwnProperty(cid))
         throw `Component for widget '${cid}' is not registered`;
 
-    return <ReactWidget wComponent={widgets[cid]} wProps={props} wChildren={childrenInfo}/>;
+    const children = [];
+    if (props.hasOwnProperty('children') && props.children) {
+        props.children.forEach(childInfo => {
+            children.push(createWidget(childInfo['cid'], childInfo['props']));
+        });
+    }
+
+    return React.createElement(widgets[cid], props, ...children);
 }
 
 /**
  * Hydrate an HTML element with component
  *
- * @param element
+ * @param {HTMLElement} node
  */
-export function hydrateElement(element) {
-    const em = $(element);
-    const cid = em.data('cid');
-    const props = em.data('props');
-    const children = em.data('children');
+export function hydrateHTMLElement(node) {
+    const cid = node.getAttribute('data-cid');
+    const props = JSON.parse(node.getAttribute('data-props'));
+    const widget = createWidget(cid, props);
 
-    if (em.hasClass('initialized'))
-        return;
+    ReactDOM.render(widget, node);
 
-    ReactDOM.render(createWidget(cid, props, children), element);
-    em.addClass('initialized');
+    // Remove wrapper
+    node.children.forEach(childNode => {
+        node.parentNode.insertBefore(childNode, node);
+    });
+    node.remove();
 }
 
+/**
+ * Initialize non-initialized components found on the page
+ *
+ * @param {string} cid
+ */
 function initComponents(cid) {
-    // Init all widgets found on the page
-    $(`.pytsite-widget2[data-cid="${cid}"]`).not('.initialized').each(function () {
-        hydrateElement(this);
+    document.querySelectorAll(`.pytsite-widget2-container[data-cid="${cid}"]`).forEach(em => {
+        hydrateHTMLElement(em)
     });
 }
 
 // Register widgets provided by this plugin
-registerWidgetComponent('plugins.widget2.input.hidden', Hidden);
+registerWidget('plugins.widget2.static.html', Html);
+
+registerWidget('plugins.widget2.input.hidden', Hidden);
+registerWidget('plugins.widget2.input.text', Text);

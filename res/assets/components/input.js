@@ -26,3 +26,9 @@ export class Hidden extends React.Component {
         return <Input type={'hidden'} {...this.props}/>;
     }
 }
+
+export class Text extends React.Component {
+    render() {
+        return <Input type={'text'} {...this.props}/>;
+    }
+}

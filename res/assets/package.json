@@ -2,6 +2,7 @@
   "name": "@pytsite/widget2",
   "main": "js/index.js",
   "dependencies": {
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "html-to-react": "^1.3.4"
   }
 }

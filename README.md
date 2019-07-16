@@ -4,6 +4,14 @@
 ## Changelog
 
 
+### 0.4 (2019-07-16)
+
+- Huge rework of the logic and code.
+- `Base` renamed to `Widget`.
+- New widgets adde: `Container` and `HTML`.
+
+
+
 ### 0.3 (2019-07-13)
 
 Support of `pytsite-9.0`.

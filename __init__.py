@@ -5,5 +5,6 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 # Public API
-from ._base import Base
-from . import _input as input
+from ._widget import Widget
+from ._container import Container
+from . import _input as input, _static as static
