@@ -4,6 +4,12 @@
 ## Changelog
 
 
+### 0.5 (2019-07-17)
+
+- JS API slightly reworked.
+- Errors fixed.
+
+
 ### 0.4 (2019-07-16)
 
 - Huge rework of the logic and code.

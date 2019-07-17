@@ -4,7 +4,6 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-import htmler
 from ._widget import Widget
 
 
@@ -15,14 +14,18 @@ class Input(Widget):
     def __init__(self, uid: str = None, **kwargs):
         super().__init__(uid, **kwargs)
 
-        self._type = kwargs.get('type', 'hidden')
-
-    def render(self) -> htmler.Element:
         self._props.update({
-            'type': self._type,
+            'autoComplete': kwargs.get('autocomplete', 'on'),
+            'autoFocus': kwargs.get('autofocus', False),
+            'disabled': kwargs.get('disabled', False),
+            'form': kwargs.get('form'),
+            'list': kwargs.get('list'),
+            'name': kwargs.get('name', self.uid),
+            'readOnly': kwargs.get('readonly', False),
+            'required': kwargs.get('required', False),
+            'tabIndex': kwargs.get('tabindex'),
+            'type': kwargs.get('type', 'hidden'),
         })
-
-        return super().render()
 
 
 class Hidden(Input):
@@ -38,15 +41,24 @@ class Text(Input):
     """
 
     def __init__(self, uid: str = None, **kwargs):
-        """Init.
+        """Init
         """
         super().__init__(uid, type='text', **kwargs)
 
         self._props.update({
-            'autoComplete': kwargs.get('autocomplete', 'on'),
-            'minLength': kwargs.get('min_length'),
-            'maxLength': kwargs.get('max_length'),
-            'prepend': kwargs.get('prepend'),
             'append': kwargs.get('append'),
             'inputmask': kwargs.get('inputmask'),
+            'maxLength': kwargs.get('max_length'),
+            'minLength': kwargs.get('min_length'),
+            'prepend': kwargs.get('prepend'),
         })
+
+
+class Submit(Input):
+    """Submit Input
+    """
+
+    def __init__(self, uid: str = None, **kwargs):
+        """Init.
+        """
+        super().__init__(uid, type='submit', **kwargs)

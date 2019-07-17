@@ -79,7 +79,7 @@ class Widget:
     def as_jsonable(self):
         return {
             'cid': self.cid,
-            'props': self._props,
+            'props': cleanup_dict(self._props),
         }
 
     def render(self) -> htmler.Element:

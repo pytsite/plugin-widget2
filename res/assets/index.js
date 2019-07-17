@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Html} from "./components/static";
-import {Hidden, Text} from "./components/input";
+import Input from "./components/input";
 
 const widgets = {};
 
@@ -70,5 +70,7 @@ function initComponents(cid) {
 // Register widgets provided by this plugin
 registerWidget('plugins.widget2.static.html', Html);
 
-registerWidget('plugins.widget2.input.hidden', Hidden);
-registerWidget('plugins.widget2.input.text', Text);
+registerWidget('plugins.widget2.input.input', Input);
+registerWidget('plugins.widget2.input.hidden', Input);
+registerWidget('plugins.widget2.input.text', Input);
+registerWidget('plugins.widget2.input.submit', Input);

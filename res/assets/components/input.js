@@ -1,34 +1,44 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Widget from './widget';
 
-export class Input extends React.Component {
-    static propTypes = {
+export default class Input extends Widget {
+    static propTypes = Object.assign({}, Widget.propTypes, {
         autoComplete: PropTypes.string,
         autoFocus: PropTypes.bool,
-        className: PropTypes.string,
-        enabled: PropTypes.bool,
-        required: PropTypes.bool,
+        disabled: PropTypes.bool,
+        form: PropTypes.string,
+        list: PropTypes.string,
+        name: PropTypes.string,
+        onChange: PropTypes.func,
         readOnly: PropTypes.bool,
+        required: PropTypes.bool,
+        tabIndex: PropTypes.number,
         type: PropTypes.string,
-    };
+        value: PropTypes.string,
+    });
 
     static defaultProps = {
         type: 'hidden',
     };
 
-    render() {
-        return <input {...this.props}/>;
-    }
-}
+    constructor(props) {
+        super(props);
 
-export class Hidden extends React.Component {
-    render() {
-        return <Input type={'hidden'} {...this.props}/>;
-    }
-}
+        this.state = {
+            value: this.props.value,
+        };
 
-export class Text extends React.Component {
+        this.onChange = this.onChange.bind(this);
+    }
+
+    onChange(e) {
+        this.setState({value: e.target.value});
+        this.props.onChange && this.props.onChange(this.props.id, e);
+    }
+
     render() {
-        return <Input type={'text'} {...this.props}/>;
+        const props = Object.assign({}, this.props, {onChange: this.onChange});
+        return <input {...props}/>;
     }
 }
