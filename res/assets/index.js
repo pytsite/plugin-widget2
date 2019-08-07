@@ -48,12 +48,7 @@ export function hydrateHTMLElement(node) {
     const widget = createWidget(cid, props);
 
     ReactDOM.render(widget, node);
-
-    // Remove wrapper
-    node.children.forEach(childNode => {
-        node.parentNode.insertBefore(childNode, node);
-    });
-    node.remove();
+    node.classList.add('initialized');
 }
 
 /**
@@ -62,7 +57,7 @@ export function hydrateHTMLElement(node) {
  * @param {string} cid
  */
 function initComponents(cid) {
-    document.querySelectorAll(`.pytsite-widget2-container[data-cid="${cid}"]`).forEach(em => {
+    document.querySelectorAll(`.pytsite-widget2-container[data-cid="${cid}"]:not(.initialized)`).forEach(em => {
         hydrateHTMLElement(em)
     });
 }

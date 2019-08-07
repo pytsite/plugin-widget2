@@ -77,6 +77,8 @@ class Widget:
         }
 
     def as_jsonable(self):
+        """Hook
+        """
         return {
             'cid': self.cid,
             'props': cleanup_dict(self._props),

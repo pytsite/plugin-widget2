@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 0.5.1 (2019-08-07)
+
+Improper usage of React's container fixed.
+
+
 ### 0.5 (2019-07-17)
 
 - JS API slightly reworked.
